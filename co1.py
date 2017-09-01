@@ -33,12 +33,18 @@ pineappleon = True
 puffer = pygame.image.load("img/puffer.png")
 pufferrect = pygame.Rect(193, 442, 64, 64)
 
-fruitnum = 1
+fruitnumstart = 1
+fruitnum = fruitnumstart
 
 cupcake = pygame.image.load("img/cupcake.png")
 cupcakerect = pygame.Rect(400, 173, 64, 64)
 
 fonts = pygame.font.Font("font/animeace2_ital.ttf", 18)
+playagainsurface = fonts.render("Play Again", False, white)
+playagainrect = playagainsurface.get_rect(left=350, top=375)
+
+quitsurface = fonts.render("Quit", False, white)
+quitrect = quitsurface.get_rect(left=370, top=425)
 speed = 4
 lspeed = 2
 direction = "up"
@@ -59,6 +65,16 @@ while gameon:
                 direction = "up"
             if darrow_rect.collidepoint(mousepos):
                 direction = 'down'
+            if level == 100:
+                if playagainrect.collidepoint(mousepos):
+                    guffyrect.center = (100, 100)
+                    leorect.center = (700, 321)
+                    fruitnum = fruitnumstart
+                    level = 1
+                if quitrect.collidepoint(mousepos):
+                    gameon = False
+                    
+                    
 
     if level == 1:
         screen.fill(blue)
@@ -114,7 +130,10 @@ while gameon:
         if guffyrect.colliderect(leorect):
             screen.fill(pink)
             panda = fonts.render("Game Over", False, white)
+           
             screen.blit(panda, (350, 302))
+            screen.blit(playagainsurface, playagainrect)
+            screen.blit(quitsurface, quitrect)
             level = 100
 
 
