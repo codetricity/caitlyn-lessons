@@ -140,5 +140,6 @@ while gameon:
     if level == 2:
         screen.fill(purple)
         screen.blit(puffer, pufferrect)
+        pufferrect.centerx = pufferrect.centerx + speed
     clock.tick(FPS)
     pygame.display.update()
