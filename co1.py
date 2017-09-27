@@ -4,7 +4,9 @@ testmode = True
 
 FPS = 100
 clock = pygame.time.Clock()
-size = (800, 600)
+SCREENWIDTH = 800
+SCREENHEIGHT = 600
+size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 
 
@@ -44,8 +46,11 @@ pufferrect = pygame.Rect(193, 442, 64, 64)
 
 pufferleft = pygame.image.load("img/pufferleft.png")
 
-shark = pygame.image.load('img/shark.png')
+sharkleft = pygame.image.load('img/shark.png')
+shark = sharkleft
 sharkrect = pygame.Rect(400, 100, 64, 64)
+
+sharkright = pygame.image.load("img/sharkright.png")
 
 squid = pygame.image.load('img/squid.png')
 squidrect = pygame.Rect(602, 123, 64, 64)
@@ -70,9 +75,9 @@ quitsurface = fonts.render("Quit", False, white)
 quitrect = quitsurface.get_rect(left=370, top=425)
 speed = 4
 lspeed = 1
-sspeed = 2
+sspeed = 1
 direction = "up"
-level = 1
+level = 2
 gameon = True
 
 while gameon:
@@ -163,11 +168,13 @@ while gameon:
         
         if fruitnum == 0:
             level = 2
+            direction = "stop"
     
         if guffyrect.colliderect(leorect):
             screen.fill(pink)
             gameoversurface = fonts.render("Game Over", False, white)
            
+        
             screen.blit(gameoversurface, (350, 302))
             screen.blit(playagainsurface, playagainrect)
             screen.blit(quitsurface, quitrect)
@@ -175,7 +182,6 @@ while gameon:
 
 
     if level == 2:
-        testmode = False
         screen.fill(purple)
         screen.blit(puffer, pufferrect)
         screen.blit(manta, mantarect)
@@ -190,6 +196,7 @@ while gameon:
 
         if direction == "right":
             pufferrect.centerx = pufferrect.centerx + speed
+            puffer = pufferRight
         if direction == "left":
             puffer = pufferleft
             pufferrect.centerx = pufferrect.centerx - speed
@@ -206,7 +213,24 @@ while gameon:
             direction = "down"
         if pufferrect.bottom > 600:
             direction = "up"
+
+        if not testmode:
+            if pufferrect.centerx > sharkrect.centerx:
+                sharkrect.centerx = sharkrect.centerx + sspeed
+                shark = sharkright
+            if pufferrect.centerx < sharkrect.centerx:
+                sharkrect.centerx = sharkrect.centerx - sspeed
+                shark = sharkleft
+            if pufferrect.centery > sharkrect.centery:
+                sharkrect.centery = sharkrect.centery + sspeed
+            if pufferrect.centery < sharkrect.centery:
+                sharkrect.centery = sharkrect.centery - sspeed
+
+        if pufferrect.colliderect(sharkrect):
+            screen.fill(yellow)
         
+        if pufferrect.colliderect(seaweedrect):
+            speed = 1
 
     clock.tick(FPS)
     pygame.display.update()
