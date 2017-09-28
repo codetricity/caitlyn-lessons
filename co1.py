@@ -58,6 +58,9 @@ squidrect = pygame.Rect(602, 123, 64, 64)
 manta = pygame.image.load('img/manta.png')
 mantarect = pygame.Rect(411, 421, 64, 64)
 
+sofa = pygame.image.load('img/sofa.png')
+sofarect = pygame.Rect(100, 450, 300, 143)
+
 fruitnumstart = 2
 fruitnum = fruitnumstart
 
@@ -77,7 +80,7 @@ speed = 4
 lspeed = 1
 sspeed = 1
 direction = "up"
-level = 2
+level = 1
 gameon = True
 
 while gameon:
@@ -183,6 +186,7 @@ while gameon:
 
     if level == 2:
         screen.fill(purple)
+        screen.blit(sofa, sofarect)
         screen.blit(puffer, pufferrect)
         screen.blit(manta, mantarect)
         screen.blit(squid, squidrect)
@@ -192,6 +196,7 @@ while gameon:
         screen.blit(larrow, larrow_rect)
         screen.blit(uarrow, uarrow_rect)
         screen.blit(darrow, darrow_rect)
+        
     
 
         if direction == "right":
