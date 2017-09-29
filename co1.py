@@ -56,7 +56,9 @@ squid = pygame.image.load('img/squid.png')
 squidrect = pygame.Rect(602, 123, 64, 64)
 
 manta = pygame.image.load('img/manta.png')
-mantarect = pygame.Rect(411, 421, 64, 64)
+mantarect = pygame.Rect(111, 121, 64, 64)
+
+seaweedrect2 = pygame.Rect(111, 321, 64, 64)
 
 sofa = pygame.image.load('img/sofa.png')
 sofarect = pygame.Rect(100, 450, 300, 143)
@@ -64,11 +66,14 @@ sofarect = pygame.Rect(100, 450, 300, 143)
 fruitnumstart = 2
 fruitnum = fruitnumstart
 
+friendnumstart = 2
+friendnum = friendnumstart
+
 cupcake = pygame.image.load("img/cupcake.png")
 cupcakerect = pygame.Rect(400, 173, 64, 64)
 
 seaweed = pygame.image.load('img/seaweed.png')
-seaweedrect = pygame.Rect(301, 210, 64, 72)
+seaweedrect = pygame.Rect(301, 123, 64, 72)
 
 fonts = pygame.font.Font("font/animeace2_ital.ttf", 18)
 playagainsurface = fonts.render("Play Again", False, white)
@@ -80,7 +85,7 @@ speed = 4
 lspeed = 1
 sspeed = 1
 direction = "up"
-level = 1
+level = 2
 gameon = True
 
 while gameon:
@@ -104,6 +109,7 @@ while gameon:
                     pineappleon = True
                     peaon = True
                     fruitnum = fruitnumstart
+                    friendnum = friendnumstart
                     level = 1
                 if quitrect.collidepoint(mousepos):
                     gameon = False
@@ -196,6 +202,7 @@ while gameon:
         screen.blit(larrow, larrow_rect)
         screen.blit(uarrow, uarrow_rect)
         screen.blit(darrow, darrow_rect)
+        screen.blit(seaweed, seaweedrect2)
         
     
 
@@ -236,6 +243,26 @@ while gameon:
         
         if pufferrect.colliderect(seaweedrect):
             speed = 1
+        
+        if pufferrect.colliderect(seaweedrect2):
+            speed = 1
+
+        if pufferrect.colliderect(squidrect):
+            squidrect.centerx = 209
+            squidrect.centery = 500
+            speed = 4
+            friendnum = friendnum - 1
+
+        if pufferrect.colliderect(mantarect):
+            mantarect.centerx = 275
+            mantarect.centery = 500
+            speed = 4
+            friendnum = friendnum - 1
+
+        if friendnum == 0:
+            screen.fill(pink)
+
+
 
     clock.tick(FPS)
     pygame.display.update()
