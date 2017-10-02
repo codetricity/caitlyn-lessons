@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-testmode = True
+testmode = False
 
 FPS = 100
 clock = pygame.time.Clock()
@@ -54,9 +54,11 @@ sharkright = pygame.image.load("img/sharkright.png")
 
 squid = pygame.image.load('img/squid.png')
 squidrect = pygame.Rect(602, 123, 64, 64)
+squidOnCouch = False
 
 manta = pygame.image.load('img/manta.png')
 mantarect = pygame.Rect(111, 121, 64, 64)
+mantaOnCouch = False
 
 seaweedrect2 = pygame.Rect(111, 321, 64, 64)
 
@@ -78,6 +80,8 @@ seaweedrect = pygame.Rect(301, 123, 64, 72)
 fonts = pygame.font.Font("font/animeace2_ital.ttf", 18)
 playagainsurface = fonts.render("Play Again", False, white)
 playagainrect = playagainsurface.get_rect(left=350, top=375)
+
+winsurface = fonts.render("Win", False, white)
 
 quitsurface = fonts.render("Quit", False, white)
 quitrect = quitsurface.get_rect(left=370, top=425)
@@ -250,19 +254,28 @@ while gameon:
         if pufferrect.colliderect(squidrect):
             squidrect.centerx = 209
             squidrect.centery = 500
-            speed = 4
-            friendnum = friendnum - 1
+            if not squidOnCouch:
+                speed = 4
+                friendnum = friendnum - 1
+            squidOnCouch = True
 
         if pufferrect.colliderect(mantarect):
             mantarect.centerx = 275
             mantarect.centery = 500
-            speed = 4
-            friendnum = friendnum - 1
+            if not mantaOnCouch:
+                speed = 4
+                friendnum = friendnum - 1
+            mantaOnCouch = True
 
-        if friendnum == 0:
+        print(friendnum)
+        if friendnum <= 0:
             screen.fill(pink)
+            screen.blit(winsurface, (400, 300))
+            screen.blit(playagainsurface, (350, 203))
+            sspeed = 0
 
 
 
+        
     clock.tick(FPS)
     pygame.display.update()
