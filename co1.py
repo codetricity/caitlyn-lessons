@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-testmode = False
+testmode = True
 
 FPS = 100
 clock = pygame.time.Clock()
@@ -78,10 +78,11 @@ seaweed = pygame.image.load('img/seaweed.png')
 seaweedrect = pygame.Rect(301, 123, 64, 72)
 
 fonts = pygame.font.Font("font/animeace2_ital.ttf", 18)
+winningFont = pygame.font.Font("font/animeace2_bld.ttf", 72)
 playagainsurface = fonts.render("Play Again", False, white)
 playagainrect = playagainsurface.get_rect(left=350, top=375)
 
-winsurface = fonts.render("Win", False, white)
+winsurface = winningFont.render("You Won!", False, white)
 
 quitsurface = fonts.render("Quit", False, white)
 quitrect = quitsurface.get_rect(left=370, top=425)
@@ -89,7 +90,7 @@ speed = 4
 lspeed = 1
 sspeed = 1
 direction = "up"
-level = 2
+level = 1
 gameon = True
 
 while gameon:
@@ -109,6 +110,7 @@ while gameon:
             if level == 100:
                 if playagainrect.collidepoint(mousepos):
                     guffyrect.center = (100, 100)
+                    speed = 4
                     leorect.center = (700, 321)
                     pineappleon = True
                     peaon = True
@@ -117,7 +119,21 @@ while gameon:
                     level = 1
                 if quitrect.collidepoint(mousepos):
                     gameon = False
-                    
+            if level == 200:
+                if playagainrect.collidepoint(mousepos):
+                    guffyrect.center = (100, 100)
+                    leorect.center = (700, 321)
+                    pineappleon = True
+                    peaon = True
+                    fruitnum = fruitnumstart
+                    friendnum = friendnumstart
+                    pufferrect.center = (193, 442)
+                    sharkrect.center = (400, 100)
+                    squidrect.center = (602, 123)
+                    mantarect.center = (111, 121)
+                    level = 1
+                if quitrect.collidepoint(mousepos):
+                    gameon = False
                     
 
     if level == 1:
@@ -243,7 +259,12 @@ while gameon:
                 sharkrect.centery = sharkrect.centery - sspeed
 
         if pufferrect.colliderect(sharkrect):
-            screen.fill(yellow)
+            screen.fill(pink)
+            gameoversurface = fonts.render("Game Over", False, white)
+            screen.blit(gameoversurface, (350, 302))
+            screen.blit(playagainsurface, playagainrect)
+            screen.blit(quitsurface, quitrect)
+            level = 100
         
         if pufferrect.colliderect(seaweedrect):
             speed = 1
@@ -269,10 +290,12 @@ while gameon:
 
         print(friendnum)
         if friendnum <= 0:
-            screen.fill(pink)
-            screen.blit(winsurface, (400, 300))
-            screen.blit(playagainsurface, (350, 203))
+            screen.fill(yellow)
+            screen.blit(winsurface, (200, 100))
+            screen.blit(playagainsurface, playagainrect)
+            screen.blit(quitsurface, quitrect)
             sspeed = 0
+            level = 200
 
 
 
