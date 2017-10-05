@@ -117,6 +117,7 @@ while gameon:
                     fruitnum = fruitnumstart
                     friendnum = friendnumstart
                     level = 1
+                    print("going to level ", level)
                 if quitrect.collidepoint(mousepos):
                     gameon = False
             if level == 200:
@@ -194,23 +195,23 @@ while gameon:
 
         if guffyrect.colliderect(cupcakerect):
             speed = 2
-        
-        if fruitnum == 0:
-            level = 2
-            direction = "stop"
-    
-        if guffyrect.colliderect(leorect):
+
+        # go to game over screen
+        if guffyrect.colliderect(leorect) and level == 1:
             screen.fill(pink)
             gameoversurface = fonts.render("Game Over", False, white)
-           
-        
             screen.blit(gameoversurface, (350, 302))
             screen.blit(playagainsurface, playagainrect)
             screen.blit(quitsurface, quitrect)
             level = 100
 
+        if fruitnum == 0:
+            level = 2
+            print("going to level ", level)
+            direction = "stop"
 
     if level == 2:
+        "Print I'm at level 2"
         screen.fill(purple)
         screen.blit(sofa, sofarect)
         screen.blit(puffer, pufferrect)
@@ -288,7 +289,7 @@ while gameon:
                 friendnum = friendnum - 1
             mantaOnCouch = True
 
-        print(friendnum)
+    
         if friendnum <= 0:
             screen.fill(yellow)
             screen.blit(winsurface, (200, 100))
